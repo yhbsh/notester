@@ -19,12 +19,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         databaseHelper = DatabaseHelper.getInstance(this);
 
-        ListView listView = findViewById(R.id.listView);
+        ListView notesListView = findViewById(R.id.notesListView);
 
         notesTitles = loadNotesTitles();
 
-        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, notesTitles);
-        listView.setAdapter(arrayAdapter);
+        final ArrayAdapter<String> notesListViewAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, notesTitles);
+        notesListView.setAdapter(notesListViewAdapter);
 
         final EditText editTextTitle = findViewById(R.id.editTextTitle);
         editTextTitle.setOnEditorActionListener((v, actionId, event) -> {
@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
             editTextTitle.setText("");
 
             notesTitles.add(0, title);
-            arrayAdapter.notifyDataSetChanged();
+            notesListViewAdapter.notifyDataSetChanged();
 
             return false;
         });
