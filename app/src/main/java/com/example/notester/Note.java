@@ -1,19 +1,32 @@
 package com.example.notester;
 
 public class Note {
-    private final int id;
-    private final String title;
+    private Integer id;
+    private String title;
 
-    public Note(int id, String title) {
+    public Note() {
+        this.id = 0;
+        this.title = "";
+    }
+
+    public Note(Integer id, String title) {
         this.id = id;
         this.title = title;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getTitle() {
         return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 }

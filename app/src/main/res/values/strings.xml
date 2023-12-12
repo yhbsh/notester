@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">notester</string>
+    <string name="enter_title">Enter Title</string>
+    <string name="create_a_new_note">Create a new note</string>
 </resources>

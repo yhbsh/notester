@@ -1,6 +1,7 @@
 package com.example.notester;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -25,24 +26,46 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public ArrayList<Note> getNotes() {
-        final ArrayList<Note> notes = new ArrayList<>(0);
+        final ArrayList<Note> notes = new ArrayList<>();
 
-        for (int i = 0; i < 100; i++) {
-            final Note note = new Note(i, "This is the title of note " + i);
-            
-            notes.add(note);
+        final SQLiteDatabase db = getReadableDatabase();
+
+        final String GET_NOTES = "SELECT * FROM notes;";
+
+        final Cursor cursor = db.rawQuery(GET_NOTES, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                final Integer id = cursor.getInt(0);
+                final String title = cursor.getString(1);
+
+                final Note note = new Note();
+                note.setId(id);
+                note.setTitle(title);
+
+                notes.add(note);
+            } while (cursor.moveToNext());
         }
+
+        cursor.close();
 
         return notes;
     }
+
+    public void createNote(String title) {
+        final SQLiteDatabase db = getWritableDatabase();
+
+        final String CREATE_NOTE = "INSERT INTO notes (title) VALUES (?);";
+
+        db.execSQL(CREATE_NOTE, new String[]{title});
+    }
+
 
     @Override
     public void onCreate(SQLiteDatabase db) {
         final String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS notes (" +
                 "_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "title TEXT, " +
-                "content TEXT, " +
-                "created_at DATETIME DEFAULT CURRENT_TIMESTAMP" +
+                "title TEXT" +
                 ");";
 
         db.execSQL(CREATE_TABLE);
