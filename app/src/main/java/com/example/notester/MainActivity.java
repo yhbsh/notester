@@ -3,35 +3,34 @@ package com.example.notester;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class MainActivity extends AppCompatActivity {
+import java.util.ArrayList;
 
+public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
 
         ListView listView = findViewById(R.id.listView);
 
-        String[] items = new String[100];
+        final DatabaseHelper databaseHelper = DatabaseHelper.getInstance(this);
+        final ArrayList<Note> notes = databaseHelper.getNotes();
 
-        for (int i = 0; i < 100; i++) {
-            items[i] = "Hello World";
+        final ArrayList<String> titles = new ArrayList<>();
+
+        for (Note note : notes) {
+            titles.add(note.getTitle());
         }
 
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, R.layout.list_item, items);
+        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, R.layout.list_item, titles);
         listView.setAdapter(arrayAdapter);
-
-        listView.setOnItemClickListener((parent, view, position, id) -> {
-            // Code to execute on item click
-
-            // Example: display a Toast with the clicked item's text
-            String selectedItem = (String) parent.getItemAtPosition(position);
-            Toast.makeText(MainActivity.this, "Clicked: " + selectedItem + " " + position, Toast.LENGTH_SHORT).show();
-        });
-
     }
 }
