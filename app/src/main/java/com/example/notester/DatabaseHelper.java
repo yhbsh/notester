@@ -39,10 +39,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 final Integer id = cursor.getInt(0);
                 final String title = cursor.getString(1);
 
-                final Note note = new Note();
-                note.setId(id);
-                note.setTitle(title);
-
+                final Note note = new Note(id, title);
                 notes.add(note);
             } while (cursor.moveToNext());
         }
