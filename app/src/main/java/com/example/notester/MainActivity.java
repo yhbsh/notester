@@ -2,10 +2,11 @@ package com.example.notester;
 
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
 
@@ -26,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
         final ArrayAdapter<String> notesListViewAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, notesTitles);
         notesListView.setAdapter(notesListViewAdapter);
 
-        final EditText editTextTitle = findViewById(R.id.editTextTitle);
+        final TextInputEditText editTextTitle = findViewById(R.id.editTextTitle);
         editTextTitle.setOnEditorActionListener((v, actionId, event) -> {
             final String title = editTextTitle.getText().toString();
             databaseHelper.createNote(title);
